@@ -5,7 +5,10 @@ date: "2019-02-16"
 output: workflowr::wflow_html
 ---
 
+```{r echo=FALSE}
+knitr::include_graphics('../../../../Desktop/desktopjunk/katya gifs/ohhello.jpg')
+```
 
-![Ooohhh HELLO]("../../../../Desktop/desktopjunk/katya gifs/ohhello.jpg")
+
 
 
