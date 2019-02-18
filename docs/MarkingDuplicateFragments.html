@@ -441,13 +441,13 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2019-02-17
+<strong>Last updated:</strong> 2019-02-18
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
 </p>
 <p>
-<strong>Knit directory:</strong> <code>CM_ATAC_Workflow/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+<strong>Knit directory:</strong> <code>CM_ATAC_Workflow/analysis/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
 </p>
 <p>
 This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
@@ -520,19 +520,27 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKLRhodesCMATACWorkflowtree1c7115d364946ff84b3d3985e5e7fa10ad7073a9targetblank1c7115da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KLRhodes/CM_ATAC_Workflow/tree/1c7115d364946ff84b3d3985e5e7fa10ad7073a9" target="_blank">1c7115d</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKLRhodesCMATACWorkflowtree573d9cb141ef3f2eb936217da3cd09ec4bd8a959targetblank573d9cba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KLRhodes/CM_ATAC_Workflow/tree/573d9cb141ef3f2eb936217da3cd09ec4bd8a959" target="_blank">573d9cb</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKLRhodesCMATACWorkflowtree1c7115d364946ff84b3d3985e5e7fa10ad7073a9targetblank1c7115da" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKLRhodesCMATACWorkflowtree573d9cb141ef3f2eb936217da3cd09ec4bd8a959targetblank573d9cba" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
+Ignored files:
+    Ignored:    docs/figure/
+
 Untracked files:
-    Untracked:  code/MarkDupFlagstat.bash
-    Untracked:  code/MarkDupFlagstat.sh
+    Untracked:  code/CollateFlagstat.R
     Untracked:  code/MarkDupFlagstatNoLoops.bash
+    Untracked:  code/submit-MarkDupFlagstat.sh
+    Untracked:  output/ATACQCsamplenamelineday.txt
+    Untracked:  output/flagstat_all.txt
+
+Unstaged changes:
+    Modified:   _workflowr.yml
 
 </code></pre>
 <p>
@@ -571,6 +579,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KLRhodes/CM_ATAC_Workflow/blob/573d9cb141ef3f2eb936217da3cd09ec4bd8a959/analysis/MarkingDuplicateFragments.Rmd" target="_blank">573d9cb</a>
+</td>
+<td>
+KLRhodes
+</td>
+<td>
+2019-02-18
+</td>
+<td>
+wflow_publish(“analysis/MarkingDuplicateFragments.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/KLRhodes/CM_ATAC_Workflow/8d42fdd970a181d42bc6a7926b59f9cf3cab532c/docs/MarkingDuplicateFragments.html" target="_blank">8d42fdd</a>
+</td>
+<td>
+KLRhodes
+</td>
+<td>
+2019-02-17
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -636,8 +678,112 @@ wflow_publish(“analysis/MarkingDuplicateFragments.Rmd”)
 <p>Ran on test Midway2, Gilad partition with 12G of memory 2/17/19 using only one bam file</p>
 <p>takes about 25 min per bam file</p>
 <p>MarkDupFlagstatNoLoops.sh can be found in code directory– (will find a way to echo it here)</p>
+<pre class="r"><code>#show code from MarkDupFlagstatNoLoops.sh
+noquote(readLines(&quot;../code/MarkDupFlagstatNoLoops.bash&quot;))</code></pre>
+<pre><code> [1] #!/bin/bash                                                                                                       
+ [2]                                                                                                                   
+ [3] f=$1                                                                                                              
+ [4]                                                                                                                   
+ [5] echo $f                                                                                                           
+ [6]                                                                                                                   
+ [7]                                                                                                                   
+ [8] #have bam file from subread align                                                                                 
+ [9] #need to name sort the bam file                                                                                   
+[10] echo &quot;name sorting&quot;                                                                                               
+[11] samtools sort -n $f -o ./FlagStat/${f/.bam/.namesorted.bam}                                                       
+[12]                                                                                                                   
+[13] #need to use fixmate to add matescore tags                                                                        
+[14] echo &quot;fixmate&quot;                                                                                                    
+[15] samtools fixmate -m ./FlagStat/${f/.bam/.namesorted.bam} ./FlagStat/${f/.bam/.fixed.namesorted.bam}               
+[16]                                                                                                                   
+[17] #need to get position sorted file to feed into markdup                                                            
+[18] echo &quot;position sorting&quot;                                                                                           
+[19] samtools sort -o ./FlagStat/${f/.bam/.fixed.positionsorted.bam} ./FlagStat/${f/.bam/.fixed.namesorted.bam}        
+[20]                                                                                                                   
+[21] #now use markdup to mark duplicate alignments. -l 600 indicates the expected maximum read length. I dont          
+[22] #know if this means read length or insert length or fragment length for PE data. -s prints short summary. can add 
+[23] #-r to actually REMOVE the duplicates                                                                             
+[24] echo &quot;marking duplicates&quot;                                                                                         
+[25] samtools markdup -l 600 -s ./FlagStat/${f/.bam/.fixed.positionsorted.bam} ./FlagStat/${f/.bam/.markdup.bam}       
+[26]                                                                                                                   
+[27] #run samtools flagstat to get text file output that includes duplicate count                                      
+[28] echo &quot;running flagstat&quot;                                                                                           
+[29] samtools flagstat ./FlagStat/${f/.bam/.markdup.bam} &gt; ./FlagStat/${f/.bam/.flagstat.txt}                          
+[30]                                                                                                                   </code></pre>
 <pre class="r"><code>#from the CM_TC_ATAC/19209_and_19238/bam directory
-sbatch --partition=gilad --mem=12G MarkDupFlagstatNoLoops.sh *.bam</code></pre>
+sbatch --partition=gilad --mem=4G submit-MarkDupFlagstat.sh</code></pre>
+<p>Now I have separate txt files with the flagstat output for each sample. I want to pull out total fragments, mapped fragments, and duplicate count.</p>
+<p>Did this using CollateFlagstat.R</p>
+<pre class="r"><code>noquote(readLines(&quot;../code/CollateFlagstat.R&quot;))</code></pre>
+<pre><code>Warning in readLines(&quot;../code/CollateFlagstat.R&quot;): incomplete final line
+found on &#39;../code/CollateFlagstat.R&#39;</code></pre>
+<pre><code> [1] #!/usr/bin/env Rscript                                                                                
+ [2]                                                                                                       
+ [3] #Collate flagstat metrics from each flagstat.txt file by running this script on all and appending info
+ [4] #to a new txt                                                                                         
+ [5]                                                                                                       
+ [6]                                                                                                       
+ [7] # Obtain name of fastq file passed at the command line                                                
+ [8] args &lt;- commandArgs(trailingOnly = TRUE)                                                              
+ [9] stopifnot(length(args) == 1)                                                                          
+[10] flag &lt;- args[1]                                                                                       
+[11] stopifnot(file.exists(flag))                                                                          
+[12]                                                                                                       
+[13] #read in the text file, separate at plus sign for ease                                                
+[14] txt&lt;- read.csv( flag, header=F, sep=&quot;+&quot;)                                                              
+[15]                                                                                                       
+[16] value&lt;- txt$V1                                                                                        
+[17] flagstat&lt;- gsub(&quot;0 &quot;, &quot;&quot;,txt$V2)                                                                      
+[18] file&lt;- basename(flag)                                                                                 
+[19]                                                                                                       
+[20] info=noquote(cbind(file, flagstat, value))                                                            
+[21] colnames(info)&lt;- c(&quot;sample&quot;, &quot;flagstat_metric&quot;, &quot;value&quot;)                                              
+[22]                                                                                                       
+[23] write.table(info, file=&quot;flagstat_all.txt&quot;, append=TRUE, sep=&quot;,&quot;, quote=FALSE,                         
+[24] \trow.names=FALSE, col.names = !file.exists(&quot;flagstat_metrics.txt&quot;))                                   
+[25] \t                                                                                                     
+[26] \t                                                                                                     </code></pre>
+<pre class="r"><code>#Loops through all .flagstat.txt files in the directory
+sbatch --partition=gilad --mem=4G submit-CollateFlagstat.sh</code></pre>
+<p>Copied flagstat_all.txt to local for analysis. It exists in the ouput folder of the workflowr directory</p>
+<pre class="r"><code>all&lt;- read.csv(&quot;../output/flagstat_all.txt&quot;, header=T, sep=&quot;,&quot;, stringsAsFactors = F)
+#sampleinf&lt;- read.table(&quot;../output/ATACQCsamplenamelineday.txt&quot;, header=T)
+
+
+all$value&lt;- as.numeric(as.character(all$value))</code></pre>
+<pre><code>Warning: NAs introduced by coercion</code></pre>
+<pre class="r"><code>#all&lt;- all[order(all$sample),]
+
+dupcount&lt;- all[all$flagstat_metric ==&quot; duplicates&quot;,]
+mappedcount&lt;- all[grep(&quot; mapped \\(&quot;, all$flagstat_metric),]
+
+#plot the number of mapped fragments
+barplot(mappedcount$value)+
+  abline(h=20000000, col=&quot;red&quot;)</code></pre>
+<p><img src="figure/MarkingDuplicateFragments.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>numeric(0)</code></pre>
+<pre class="r"><code>#get nonredundant fraction (number of unique fragments/total fragments)
+nrf&lt;- (mappedcount$value-dupcount$value)/mappedcount$value
+hist(nrf)</code></pre>
+<p><img src="figure/MarkingDuplicateFragments.Rmd/unnamed-chunk-5-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#is nrf different between the two lines?
+barplot(nrf)+
+  abline(h=mean(nrf), col=&quot;blue&quot;)</code></pre>
+<p><img src="figure/MarkingDuplicateFragments.Rmd/unnamed-chunk-5-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>numeric(0)</code></pre>
+<pre class="r"><code>#most are still very low. the undetermined samples have high non redundant fraction, but this is not surprising because they&#39;ll have reads from all the samples in the lane.Notably, Nick also had lots of duplicate reads 
+#(see Figure S5 from genome biology paper--need to check on the final usable fragment count though)</code></pre>
+<div class="figure">
+<img src="assets/BanoFigS5.jpg" alt="Banovich 2018 Figure S5" />
+<p class="caption">Banovich 2018 Figure S5</p>
+</div>
+<pre class="r"><code>#get the number of unique mapped fragments per sample
+uniquemappedfrags&lt;- (mappedcount$value-dupcount$value)
+barplot(uniquemappedfrags) +
+abline(h=10000000, col=&quot;red&quot;)</code></pre>
+<p><img src="figure/MarkingDuplicateFragments.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>numeric(0)</code></pre>
+<p>Next steps: remove duplicates, remove MT reads Should I run fragment size distribution on the cleaned bams or on original bams?</p>
 <br> <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
