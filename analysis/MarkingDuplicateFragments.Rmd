@@ -4,10 +4,20 @@ author: "KLRhodes"
 date: "2019-02-17"
 output: workflowr::wflow_html
 ---
+##Marking Duplicates in bam files
 
-## Introduction
+####The bam files that I aligned with subread do not have duplicates marked. These steps mark duplicates and eventually output text files containing all of the stats that come out of samtools flagstat
 
-```{r}
 
+Ran on  test Midway2, Gilad partition with 12G of memory 2/17/19 using only one bam file
+
+takes about 25 min per bam file
+
+MarkDupFlagstatNoLoops.sh can be found in code directory-- (will find a way to echo it here)
+```{r eval=F}
+#from the CM_TC_ATAC/19209_and_19238/bam directory
+sbatch --partition=gilad --mem=12G MarkDupFlagstatNoLoops.sh *.bam
 ```
+
+
 
