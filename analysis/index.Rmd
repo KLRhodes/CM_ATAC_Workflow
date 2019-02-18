@@ -8,4 +8,11 @@ output:
 
 Welcome to my research website.
 
-Click on this [link](OhHello.html) to see my results.
+
+
+##ATACseq QC
+Click on this [link](MarkingDuplicateFragments.html) to see my wworkflow for marking and analyzing duplicates
+
+
+##Misc
+[Oh Hello](OhHello.html)
