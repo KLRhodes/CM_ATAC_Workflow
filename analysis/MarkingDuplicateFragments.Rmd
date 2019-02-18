@@ -14,10 +14,67 @@ Ran on  test Midway2, Gilad partition with 12G of memory 2/17/19 using only one 
 takes about 25 min per bam file
 
 MarkDupFlagstatNoLoops.sh can be found in code directory-- (will find a way to echo it here)
+```{r}
+#show code from MarkDupFlagstatNoLoops.sh
+noquote(readLines("../code/MarkDupFlagstatNoLoops.bash"))
+```
+
 ```{r eval=F}
 #from the CM_TC_ATAC/19209_and_19238/bam directory
-sbatch --partition=gilad --mem=12G MarkDupFlagstatNoLoops.sh *.bam
+sbatch --partition=gilad --mem=4G submit-MarkDupFlagstat.sh
+```
+
+Now I have separate txt files with the flagstat output for each sample. I want to pull out total fragments, mapped fragments, and duplicate count.  
+
+Did this using CollateFlagstat.R
+```{r}
+noquote(readLines("../code/CollateFlagstat.R"))
+```
+
+```{r eval=F}
+#Loops through all .flagstat.txt files in the directory
+sbatch --partition=gilad --mem=4G submit-CollateFlagstat.sh
+```
+
+Copied flagstat_all.txt to local for analysis. It exists in the ouput folder of the workflowr directory
+
+```{r }
+all<- read.csv("../output/flagstat_all.txt", header=T, sep=",", stringsAsFactors = F)
+#sampleinf<- read.table("../output/ATACQCsamplenamelineday.txt", header=T)
+
+
+all$value<- as.numeric(as.character(all$value))
+
+#all<- all[order(all$sample),]
+
+dupcount<- all[all$flagstat_metric ==" duplicates",]
+mappedcount<- all[grep(" mapped \\(", all$flagstat_metric),]
+
+#plot the number of mapped fragments
+barplot(mappedcount$value)+
+  abline(h=20000000, col="red")
+
+#get nonredundant fraction (number of unique fragments/total fragments)
+nrf<- (mappedcount$value-dupcount$value)/mappedcount$value
+hist(nrf)
+#is nrf different between the two lines?
+barplot(nrf)+
+  abline(h=mean(nrf), col="blue")
+#most are still very low. the undetermined samples have high non redundant fraction, but this is not surprising because they'll have reads from all the samples in the lane.Notably, Nick also had lots of duplicate reads 
+#(see Figure S5 from genome biology paper--need to check on the final usable fragment count though)
+```
+![Banovich 2018 Figure S5](assets/BanoFigS5.jpg)
+
+```{r}
+#get the number of unique mapped fragments per sample
+uniquemappedfrags<- (mappedcount$value-dupcount$value)
+barplot(uniquemappedfrags) +
+abline(h=10000000, col="red")
+
 ```
 
 
+
+Next steps: remove duplicates, remove MT reads
+Should I run fragment size distribution on the cleaned bams or on original bams?
 
