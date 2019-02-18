@@ -444,7 +444,7 @@ div.section {
 <strong>Last updated:</strong> 2019-02-17
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>CM_ATAC_Workflow/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -472,64 +472,20 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKLRhodesCMATACWorkflowtree327438b5d37abd0b8b554c31c9e9593c37136d47targetblank327438ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KLRhodes/CM_ATAC_Workflow/tree/327438b5d37abd0b8b554c31c9e9593c37136d47" target="_blank">327438b</a> </a>
 </p>
 </div>
-<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
-<div class="panel-body">
-<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
-</div>
-</div>
-</div>
-<div class="panel panel-default">
-<div class="panel-heading">
-<p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20190216code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20190216)</code> </a>
-</p>
-</div>
-<div id="strongSeedstrongcodesetseed20190216code" class="panel-collapse collapse">
-<div class="panel-body">
-<p>The command <code>set.seed(20190216)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
-</div>
-</div>
-</div>
-<div class="panel panel-default">
-<div class="panel-heading">
-<p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
-</p>
-</div>
-<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
-<div class="panel-body">
-<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
-</div>
-</div>
-</div>
-<div class="panel panel-default">
-<div class="panel-heading">
-<p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
-</p>
-</div>
-<div id="strongCachestrongnone" class="panel-collapse collapse">
-<div class="panel-body">
-<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
-</div>
-</div>
-</div>
-<div class="panel panel-default">
-<div class="panel-heading">
-<p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKLRhodesCMATACWorkflowtree3e017e633fabb046728bec2e46bbf6f0e578b5c7targetblank3e017e6a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KLRhodes/CM_ATAC_Workflow/tree/3e017e633fabb046728bec2e46bbf6f0e578b5c7" target="_blank">3e017e6</a> </a>
-</p>
-</div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKLRhodesCMATACWorkflowtree3e017e633fabb046728bec2e46bbf6f0e578b5c7targetblank3e017e6a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKLRhodesCMATACWorkflowtree327438b5d37abd0b8b554c31c9e9593c37136d47targetblank327438ba" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
-working directory clean
+Untracked files:
+    Untracked:  code/MarkDupFlagstat.bash
+    Untracked:  code/MarkDupFlagstat.sh
+    Untracked:  code/MarkDupFlagstatNoLoops.bash
+
 </code></pre>
 <p>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
@@ -567,6 +523,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KLRhodes/CM_ATAC_Workflow/blob/327438b5d37abd0b8b554c31c9e9593c37136d47/analysis/OhHello.Rmd" target="_blank">327438b</a>
+</td>
+<td>
+KLRhodes
+</td>
+<td>
+2019-02-17
+</td>
+<td>
+wflow_publish(“analysis/OhHello.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/KLRhodes/CM_ATAC_Workflow/ac09b95ee94e90e294c6ef94161c590fae2c38bf/docs/OhHello.html" target="_blank">ac09b95</a>
+</td>
+<td>
+KLRhodes
+</td>
+<td>
+2019-02-17
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -625,37 +615,9 @@ wflow_publish(“analysis/OhHello.Rmd”)
 </div>
 </div>
 </div>
-<p><img src="../../../../Desktop/desktopjunk/katya gifs/ohhello.jpg" style="display: block; margin: auto;" /></p>
-<br> <br>
-<p>
-<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
-<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
-</button>
-</p>
-<div id="workflowr-sessioninfo" class="collapse">
-<pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 3.5.2 (2018-12-20)
-Platform: x86_64-w64-mingw32/x64 (64-bit)
-Running under: Windows 10 x64 (build 17134)
-
-Matrix products: default
-
-locale:
-[1] LC_COLLATE=English_United States.1252 
-[2] LC_CTYPE=English_United States.1252   
-[3] LC_MONETARY=English_United States.1252
-[4] LC_NUMERIC=C                          
-[5] LC_TIME=English_United States.1252    
-
-attached base packages:
-[1] stats     graphics  grDevices utils     datasets  methods   base     
-
-loaded via a namespace (and not attached):
- [1] workflowr_1.2.0 Rcpp_1.0.0      digest_0.6.18   rprojroot_1.3-2
- [5] backports_1.1.3 git2r_0.24.0    magrittr_1.5    evaluate_0.12  
- [9] stringi_1.2.4   fs_1.2.6        whisker_0.3-2   rmarkdown_1.11 
-[13] tools_3.5.2     stringr_1.3.1   glue_1.3.0      xfun_0.4       
-[17] yaml_2.2.0      compiler_3.5.2  htmltools_0.3.6 knitr_1.21     </code></pre>
+<div class="figure">
+<img src="data:image/jpeg;base64,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" alt="Ohhhh HELLO" />
+<p class="caption">Ohhhh HELLO</p>
 </div>
 
 
