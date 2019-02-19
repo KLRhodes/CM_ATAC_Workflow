@@ -36,7 +36,38 @@ noquote(readLines("../code/CollateFlagstat.R"))
 sbatch --partition=gilad --mem=4G submit-CollateFlagstat.sh
 ```
 
+####Flagstat Content Guide:
+
+#####in total (QC-passed reads + QC-failed reads)
+    -total fragments before mapping
+#####secondary
+#####supplementary
+#####duplicates
+    -duplicate count (as marked by samtools markdup)
+#####mapped
+    -total mapped fragments
+#####paired in sequencing
+  -how many reads had a pair. This is all of them because aligning Read 1 and Read 2 necessitates that they be "paired"
+#####read1
+  -how many "read 1" fragments mapped
+#####read2
+  -how many "read 2" fragments mapped
+  (should be the same as read1)
+#####properly paired 
+  -how many R1 R2 are "properly paired" based on orientation, distance
+#####with itself and mate mapped
+#####singletons 
+#####with mate mapped to a different chr
+#####with mate mapped to a different chr (mapQ>=5)
+
+
+
+
 Copied flagstat_all.txt to local for analysis. It exists in the ouput folder of the workflowr directory
+```{r}
+library(ggplot2)
+library(RColorBrewer)
+```
 
 ```{r }
 all<- read.csv("../output/flagstat_all.txt", header=T, sep=",", stringsAsFactors = F)
@@ -49,6 +80,7 @@ all$value<- as.numeric(as.character(all$value))
 
 dupcount<- all[all$flagstat_metric ==" duplicates",]
 mappedcount<- all[grep(" mapped \\(", all$flagstat_metric),]
+totalcount<-all[grep("total", all$flagstat_metric),]
 
 #plot the number of mapped fragments
 barplot(mappedcount$value)+
@@ -60,21 +92,58 @@ hist(nrf)
 #is nrf different between the two lines?
 barplot(nrf)+
   abline(h=mean(nrf), col="blue")
-#most are still very low. the undetermined samples have high non redundant fraction, but this is not surprising because they'll have reads from all the samples in the lane.Notably, Nick also had lots of duplicate reads 
-#(see Figure S5 from genome biology paper--need to check on the final usable fragment count though)
-```
-![Banovich 2018 Figure S5](assets/BanoFigS5.jpg)
+#most are still very low. the undetermined samples have high non redundant fraction, but this is not surprising because they'll have reads from all the samples in the lane.
 
-```{r}
 #get the number of unique mapped fragments per sample
 uniquemappedfrags<- (mappedcount$value-dupcount$value)
 barplot(uniquemappedfrags) +
 abline(h=10000000, col="red")
 
+#make a data frame containing ABSOLUTE mapped reads and  ABSOLUTE duplicated reads
+mapped<- rep("mapped", 34)
+uniq<- rep("unique", 34)
+tot<- rep("total", 34)
+
+mapdf<- cbind(as.character(mappedcount$sample), mapped, mappedcount$value)
+
+unidf<- cbind(as.character(mappedcount$sample), uniq, mappedcount$value-dupcount$value)
+
+totdf<- cbind(as.character(mappedcount$sample), tot, totalcount$value)
+
+
+comb<-as.data.frame(rbind(totdf, mapdf, unidf))
+colnames(comb)<-c("Sample", "Metric", "Value")
+
+
+p<- (ggplot(comb,aes(x=as.character(comb$Sample), y=as.numeric(as.character(comb$Value)), fill=as.character(comb$Metric)))+ 
+        geom_bar(stat="identity",position = "identity", alpha=.5))+
+        ylim(0, 65000000)+
+        ylab("Absolute Fragment Count")+
+        xlab("Sample (not ordered)")+
+        ggtitle("Absolute Fragments, Mapped Frag, and Unique Frag", subtitle = "(reads not marked as duplicated by markdup)") +
+        geom_hline(yintercept = 10000000)
+
+p+scale_fill_brewer(breaks=c("total", "mapped", "unique"), type="qual", palette="Accent")
+
+
+#plot fractions
+comb$Value<-(as.numeric(as.character(comb$Value))/(rep(totalcount$value, 3)))
+
+f<- (ggplot(comb,aes(x=as.character(comb$Sample), y=as.numeric(as.character(comb$Value)), fill=as.character(comb$Metric)))+ 
+        geom_bar(stat="identity",position = "identity", alpha=.5))+
+        ylim(0, 1)+
+        ylab("Absolute Fragment Count")+
+        xlab("Sample (not ordered)")+
+        ggtitle("Percent Mapped Fragments and Unique Fragments", subtitle = "(frags not marked as duplicated by markdup)")
+f+scale_fill_brewer(breaks=c("total", "mapped", "unique"), type="qual", palette="Accent")
+
+
+
+#Nick also had lots of duplicate reads
+#(see Figure S5 from genome biology paper)
 ```
+![Banovich 2018 Figure S5](assets/BanoFigS5.jpg)
 
 
 
-Next steps: remove duplicates, remove MT reads
-Should I run fragment size distribution on the cleaned bams or on original bams?
 
