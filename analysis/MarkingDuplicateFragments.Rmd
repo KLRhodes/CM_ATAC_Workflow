@@ -24,7 +24,7 @@ noquote(readLines("../code/MarkDupFlagstatNoLoops.bash"))
 sbatch --partition=gilad --mem=4G submit-MarkDupFlagstat.sh
 ```
 
-Now I have separate txt files with the flagstat output for each sample. I want to pull out total fragments, mapped fragments, and duplicate count.  
+Now I have separate txt files with the flagstat output for each sample. I want to pull out total READs, mapped READs, and duplicate count.  
 
 Did this using CollateFlagstat.R
 ```{r}
@@ -39,19 +39,19 @@ sbatch --partition=gilad --mem=4G submit-CollateFlagstat.sh
 ####Flagstat Content Guide:
 
 #####in total (QC-passed reads + QC-failed reads)
-    -total fragments before mapping
+    -total READS before mapping
 #####secondary
 #####supplementary
 #####duplicates
     -duplicate count (as marked by samtools markdup)
 #####mapped
-    -total mapped fragments
+    -total mapped READS
 #####paired in sequencing
   -how many reads had a pair. This is all of them because aligning Read 1 and Read 2 necessitates that they be "paired"
 #####read1
-  -how many "read 1" fragments mapped
+  -how many "read 1" READs mapped
 #####read2
-  -how many "read 2" fragments mapped
+  -how many "read 2" READs mapped
   (should be the same as read1)
 #####properly paired 
   -how many R1 R2 are "properly paired" based on orientation, distance
@@ -82,11 +82,11 @@ dupcount<- all[all$flagstat_metric ==" duplicates",]
 mappedcount<- all[grep(" mapped \\(", all$flagstat_metric),]
 totalcount<-all[grep("total", all$flagstat_metric),]
 
-#plot the number of mapped fragments
+#plot the number of mapped reads
 barplot(mappedcount$value)+
   abline(h=20000000, col="red")
 
-#get nonredundant fraction (number of unique fragments/total fragments)
+#get nonredundant fraction (number of unique reads/total reads)
 nrf<- (mappedcount$value-dupcount$value)/mappedcount$value
 hist(nrf)
 #is nrf different between the two lines?
@@ -94,9 +94,9 @@ barplot(nrf)+
   abline(h=mean(nrf), col="blue")
 #most are still very low. the undetermined samples have high non redundant fraction, but this is not surprising because they'll have reads from all the samples in the lane.
 
-#get the number of unique mapped fragments per sample
-uniquemappedfrags<- (mappedcount$value-dupcount$value)
-barplot(uniquemappedfrags) +
+#get the number of unique mapped reads per sample
+uniquemappedreads<- (mappedcount$value-dupcount$value)
+barplot(uniquemappedreads) +
 abline(h=10000000, col="red")
 
 #make a data frame containing ABSOLUTE mapped reads and  ABSOLUTE duplicated reads
@@ -118,9 +118,9 @@ colnames(comb)<-c("Sample", "Metric", "Value")
 p<- (ggplot(comb,aes(x=as.character(comb$Sample), y=as.numeric(as.character(comb$Value)), fill=as.character(comb$Metric)))+ 
         geom_bar(stat="identity",position = "identity", alpha=.5))+
         ylim(0, 65000000)+
-        ylab("Absolute Fragment Count")+
+        ylab("Absolute read Count")+
         xlab("Sample (not ordered)")+
-        ggtitle("Absolute Fragments, Mapped Frag, and Unique Frag", subtitle = "(reads not marked as duplicated by markdup)") +
+        ggtitle("Absolute reads, Mapped read, and Unique read", subtitle = "(reads not marked as duplicated by markdup)") +
         geom_hline(yintercept = 10000000)
 
 p+scale_fill_brewer(breaks=c("total", "mapped", "unique"), type="qual", palette="Accent")
@@ -132,9 +132,9 @@ comb$Value<-(as.numeric(as.character(comb$Value))/(rep(totalcount$value, 3)))
 f<- (ggplot(comb,aes(x=as.character(comb$Sample), y=as.numeric(as.character(comb$Value)), fill=as.character(comb$Metric)))+ 
         geom_bar(stat="identity",position = "identity", alpha=.5))+
         ylim(0, 1)+
-        ylab("Absolute Fragment Count")+
+        ylab("Absolute read Count")+
         xlab("Sample (not ordered)")+
-        ggtitle("Percent Mapped Fragments and Unique Fragments", subtitle = "(frags not marked as duplicated by markdup)")
+        ggtitle("Percent Mapped reads and Unique reads", subtitle = "(reads not marked as duplicated by markdup)")
 f+scale_fill_brewer(breaks=c("total", "mapped", "unique"), type="qual", palette="Accent")
 
 
