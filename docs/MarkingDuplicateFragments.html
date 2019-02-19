@@ -520,10 +520,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKLRhodesCMATACWorkflowtreec9278dfd3464c37e814c6616cd9050f24f0d31e9targetblankc9278dfa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KLRhodes/CM_ATAC_Workflow/tree/c9278dfd3464c37e814c6616cd9050f24f0d31e9" target="_blank">c9278df</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKLRhodesCMATACWorkflowtreead6a9b706575e051439e4efca076213d1ce471b2targetblankad6a9b7a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KLRhodes/CM_ATAC_Workflow/tree/ad6a9b706575e051439e4efca076213d1ce471b2" target="_blank">ad6a9b7</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKLRhodesCMATACWorkflowtreec9278dfd3464c37e814c6616cd9050f24f0d31e9targetblankc9278dfa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKLRhodesCMATACWorkflowtreead6a9b706575e051439e4efca076213d1ce471b2targetblankad6a9b7a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -576,6 +576,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KLRhodes/CM_ATAC_Workflow/blob/ad6a9b706575e051439e4efca076213d1ce471b2/analysis/MarkingDuplicateFragments.Rmd" target="_blank">ad6a9b7</a>
+</td>
+<td>
+KLRhodes
+</td>
+<td>
+2019-02-19
+</td>
+<td>
+wflow_publish(“analysis/MarkingDuplicateFragments.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/KLRhodes/CM_ATAC_Workflow/e01dfadf6385ac7602cc446f12c3fe3dcc218eb0/docs/MarkingDuplicateFragments.html" target="_blank">e01dfad</a>
+</td>
+<td>
+KLRhodes
+</td>
+<td>
+2019-02-19
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -760,7 +794,7 @@ noquote(readLines(&quot;../code/MarkDupFlagstatNoLoops.bash&quot;))</code></pre>
 [30]                                                                                                                   </code></pre>
 <pre class="r"><code>#from the CM_TC_ATAC/19209_and_19238/bam directory
 sbatch --partition=gilad --mem=4G submit-MarkDupFlagstat.sh</code></pre>
-<p>Now I have separate txt files with the flagstat output for each sample. I want to pull out total fragments, mapped fragments, and duplicate count.</p>
+<p>Now I have separate txt files with the flagstat output for each sample. I want to pull out total READs, mapped READs, and duplicate count.</p>
 <p>Did this using CollateFlagstat.R</p>
 <pre class="r"><code>noquote(readLines(&quot;../code/CollateFlagstat.R&quot;))</code></pre>
 <pre><code>Warning in readLines(&quot;../code/CollateFlagstat.R&quot;): incomplete final line
@@ -798,7 +832,7 @@ sbatch --partition=gilad --mem=4G submit-CollateFlagstat.sh</code></pre>
 <h4>Flagstat Content Guide:</h4>
 <div id="in-total-qc-passed-reads-qc-failed-reads" class="section level5">
 <h5>in total (QC-passed reads + QC-failed reads)</h5>
-<pre><code>-total fragments before mapping</code></pre>
+<pre><code>-total READS before mapping</code></pre>
 </div>
 <div id="secondary" class="section level5">
 <h5>secondary</h5>
@@ -812,11 +846,11 @@ sbatch --partition=gilad --mem=4G submit-CollateFlagstat.sh</code></pre>
 </div>
 <div id="mapped" class="section level5">
 <h5>mapped</h5>
-<pre><code>-total mapped fragments</code></pre>
+<pre><code>-total mapped READS</code></pre>
 </div>
 <div id="paired-in-sequencing" class="section level5">
 <h5>paired in sequencing</h5>
-<p>-how many reads had a pair. This is all of them because aligning Read 1 and Read 2 necessitates that they be “paired” #####read1 -how many “read 1” fragments mapped #####read2 -how many “read 2” fragments mapped (should be the same as read1) #####properly paired -how many R1 R2 are “properly paired” based on orientation, distance #####with itself and mate mapped #####singletons #####with mate mapped to a different chr #####with mate mapped to a different chr (mapQ&gt;=5)</p>
+<p>-how many reads had a pair. This is all of them because aligning Read 1 and Read 2 necessitates that they be “paired” #####read1 -how many “read 1” READs mapped #####read2 -how many “read 2” READs mapped (should be the same as read1) #####properly paired -how many R1 R2 are “properly paired” based on orientation, distance #####with itself and mate mapped #####singletons #####with mate mapped to a different chr #####with mate mapped to a different chr (mapQ&gt;=5)</p>
 <p>Copied flagstat_all.txt to local for analysis. It exists in the ouput folder of the workflowr directory</p>
 <pre class="r"><code>library(ggplot2)
 library(RColorBrewer)</code></pre>
@@ -832,7 +866,7 @@ dupcount&lt;- all[all$flagstat_metric ==&quot; duplicates&quot;,]
 mappedcount&lt;- all[grep(&quot; mapped \\(&quot;, all$flagstat_metric),]
 totalcount&lt;-all[grep(&quot;total&quot;, all$flagstat_metric),]
 
-#plot the number of mapped fragments
+#plot the number of mapped reads
 barplot(mappedcount$value)+
   abline(h=20000000, col=&quot;red&quot;)</code></pre>
 <p><img src="figure/MarkingDuplicateFragments.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -885,7 +919,7 @@ KLRhodes
 </div>
 </div>
 <pre><code>numeric(0)</code></pre>
-<pre class="r"><code>#get nonredundant fraction (number of unique fragments/total fragments)
+<pre class="r"><code>#get nonredundant fraction (number of unique reads/total reads)
 nrf&lt;- (mappedcount$value-dupcount$value)/mappedcount$value
 hist(nrf)</code></pre>
 <p><img src="figure/MarkingDuplicateFragments.Rmd/unnamed-chunk-6-2.png" width="672" style="display: block; margin: auto;" /></p>
@@ -970,9 +1004,9 @@ KLRhodes
 <pre><code>numeric(0)</code></pre>
 <pre class="r"><code>#most are still very low. the undetermined samples have high non redundant fraction, but this is not surprising because they&#39;ll have reads from all the samples in the lane.
 
-#get the number of unique mapped fragments per sample
-uniquemappedfrags&lt;- (mappedcount$value-dupcount$value)
-barplot(uniquemappedfrags) +
+#get the number of unique mapped reads per sample
+uniquemappedreads&lt;- (mappedcount$value-dupcount$value)
+barplot(uniquemappedreads) +
 abline(h=10000000, col=&quot;red&quot;)</code></pre>
 <p><img src="figure/MarkingDuplicateFragments.Rmd/unnamed-chunk-6-4.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -1032,9 +1066,9 @@ colnames(comb)&lt;-c(&quot;Sample&quot;, &quot;Metric&quot;, &quot;Value&quot;)
 p&lt;- (ggplot(comb,aes(x=as.character(comb$Sample), y=as.numeric(as.character(comb$Value)), fill=as.character(comb$Metric)))+ 
         geom_bar(stat=&quot;identity&quot;,position = &quot;identity&quot;, alpha=.5))+
         ylim(0, 65000000)+
-        ylab(&quot;Absolute Fragment Count&quot;)+
+        ylab(&quot;Absolute read Count&quot;)+
         xlab(&quot;Sample (not ordered)&quot;)+
-        ggtitle(&quot;Absolute Fragments, Mapped Frag, and Unique Frag&quot;, subtitle = &quot;(reads not marked as duplicated by markdup)&quot;) +
+        ggtitle(&quot;Absolute reads, Mapped read, and Unique read&quot;, subtitle = &quot;(reads not marked as duplicated by markdup)&quot;) +
         geom_hline(yintercept = 10000000)
 
 p+scale_fill_brewer(breaks=c(&quot;total&quot;, &quot;mapped&quot;, &quot;unique&quot;), type=&quot;qual&quot;, palette=&quot;Accent&quot;)</code></pre>
@@ -1082,9 +1116,9 @@ comb$Value&lt;-(as.numeric(as.character(comb$Value))/(rep(totalcount$value, 3)))
 f&lt;- (ggplot(comb,aes(x=as.character(comb$Sample), y=as.numeric(as.character(comb$Value)), fill=as.character(comb$Metric)))+ 
         geom_bar(stat=&quot;identity&quot;,position = &quot;identity&quot;, alpha=.5))+
         ylim(0, 1)+
-        ylab(&quot;Absolute Fragment Count&quot;)+
+        ylab(&quot;Absolute read Count&quot;)+
         xlab(&quot;Sample (not ordered)&quot;)+
-        ggtitle(&quot;Percent Mapped Fragments and Unique Fragments&quot;, subtitle = &quot;(frags not marked as duplicated by markdup)&quot;)
+        ggtitle(&quot;Percent Mapped reads and Unique reads&quot;, subtitle = &quot;(reads not marked as duplicated by markdup)&quot;)
 f+scale_fill_brewer(breaks=c(&quot;total&quot;, &quot;mapped&quot;, &quot;unique&quot;), type=&quot;qual&quot;, palette=&quot;Accent&quot;)</code></pre>
 <p><img src="figure/MarkingDuplicateFragments.Rmd/unnamed-chunk-6-6.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
