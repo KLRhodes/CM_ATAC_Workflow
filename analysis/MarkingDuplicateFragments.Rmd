@@ -26,6 +26,8 @@ sbatch --partition=gilad --mem=4G submit-MarkDupFlagstat.sh
 
 Now I have separate txt files with the flagstat output for each sample. I want to pull out total READs, mapped READs, and duplicate count.  
 
+Note: if I need to rerun CollateFlagstat.R, make sure to DELETE the flagstat_all.txt output that exists, otherwise new values will just get appended to the existing file.
+
 Did this using CollateFlagstat.R
 ```{r}
 noquote(readLines("../code/CollateFlagstat.R"))
@@ -64,6 +66,8 @@ sbatch --partition=gilad --mem=4G submit-CollateFlagstat.sh
 
 
 Copied flagstat_all.txt to local for analysis. It exists in the ouput folder of the workflowr directory
+
+##NOTE: THESE COUNTS STILL INCLUDE MITOCHONDRIAL READS
 ```{r}
 library(ggplot2)
 library(RColorBrewer)
