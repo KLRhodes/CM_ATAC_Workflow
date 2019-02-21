@@ -441,7 +441,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2019-02-19
+<strong>Last updated:</strong> 2019-02-21
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -520,21 +520,29 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKLRhodesCMATACWorkflowtreead6a9b706575e051439e4efca076213d1ce471b2targetblankad6a9b7a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KLRhodes/CM_ATAC_Workflow/tree/ad6a9b706575e051439e4efca076213d1ce471b2" target="_blank">ad6a9b7</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKLRhodesCMATACWorkflowtree797fc2f4b6f01bb1abce0c9a4cc1de6cd327b6d3targetblank797fc2fa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KLRhodes/CM_ATAC_Workflow/tree/797fc2f4b6f01bb1abce0c9a4cc1de6cd327b6d3" target="_blank">797fc2f</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKLRhodesCMATACWorkflowtreead6a9b706575e051439e4efca076213d1ce471b2targetblankad6a9b7a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKLRhodesCMATACWorkflowtree797fc2f4b6f01bb1abce0c9a4cc1de6cd327b6d3targetblank797fc2fa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
+Ignored files:
+    Ignored:    .Rproj.user/
+
 Untracked files:
+    Untracked:  analysis/RemoveMTandDup.Rmd
+    Untracked:  analysis/deepToolsQC.Rmd
     Untracked:  code/CollateFlagstat.R
     Untracked:  code/MarkDupFlagstatNoLoops.bash
+    Untracked:  code/rmMTandDup.bash
     Untracked:  code/submit-MarkDupFlagstat.sh
+    Untracked:  code/submit-rmMTamdDup.sh
     Untracked:  output/ATACQCsamplenamelineday.txt
     Untracked:  output/flagstat_all.txt
+    Untracked:  output/genes.bed.gz
 
 Unstaged changes:
     Modified:   _workflowr.yml
@@ -576,6 +584,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KLRhodes/CM_ATAC_Workflow/blob/797fc2f4b6f01bb1abce0c9a4cc1de6cd327b6d3/analysis/MarkingDuplicateFragments.Rmd" target="_blank">797fc2f</a>
+</td>
+<td>
+KLRhodes
+</td>
+<td>
+2019-02-21
+</td>
+<td>
+wflow_publish(“MarkingDuplicateFragments.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/KLRhodes/CM_ATAC_Workflow/79dc47520954e197d2572ef7ae701b1f23d53c29/docs/MarkingDuplicateFragments.html" target="_blank">79dc475</a>
+</td>
+<td>
+KLRhodes
+</td>
+<td>
+2019-02-19
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -795,6 +837,7 @@ noquote(readLines(&quot;../code/MarkDupFlagstatNoLoops.bash&quot;))</code></pre>
 <pre class="r"><code>#from the CM_TC_ATAC/19209_and_19238/bam directory
 sbatch --partition=gilad --mem=4G submit-MarkDupFlagstat.sh</code></pre>
 <p>Now I have separate txt files with the flagstat output for each sample. I want to pull out total READs, mapped READs, and duplicate count.</p>
+<p>Note: if I need to rerun CollateFlagstat.R, make sure to DELETE the flagstat_all.txt output that exists, otherwise new values will just get appended to the existing file.</p>
 <p>Did this using CollateFlagstat.R</p>
 <pre class="r"><code>noquote(readLines(&quot;../code/CollateFlagstat.R&quot;))</code></pre>
 <pre><code>Warning in readLines(&quot;../code/CollateFlagstat.R&quot;): incomplete final line
@@ -852,6 +895,11 @@ sbatch --partition=gilad --mem=4G submit-CollateFlagstat.sh</code></pre>
 <h5>paired in sequencing</h5>
 <p>-how many reads had a pair. This is all of them because aligning Read 1 and Read 2 necessitates that they be “paired” #####read1 -how many “read 1” READs mapped #####read2 -how many “read 2” READs mapped (should be the same as read1) #####properly paired -how many R1 R2 are “properly paired” based on orientation, distance #####with itself and mate mapped #####singletons #####with mate mapped to a different chr #####with mate mapped to a different chr (mapQ&gt;=5)</p>
 <p>Copied flagstat_all.txt to local for analysis. It exists in the ouput folder of the workflowr directory</p>
+</div>
+</div>
+</div>
+<div id="note-these-counts-still-include-mitochondrial-reads" class="section level2">
+<h2>NOTE: THESE COUNTS STILL INCLUDE MITOCHONDRIAL READS</h2>
 <pre class="r"><code>library(ggplot2)
 library(RColorBrewer)</code></pre>
 <pre class="r"><code>all&lt;- read.csv(&quot;../output/flagstat_all.txt&quot;, header=T, sep=&quot;,&quot;, stringsAsFactors = F)
@@ -1097,6 +1145,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/KLRhodes/CM_ATAC_Workflow/blob/79dc47520954e197d2572ef7ae701b1f23d53c29/docs/figure/MarkingDuplicateFragments.Rmd/unnamed-chunk-6-5.png" target="_blank">79dc475</a>
+</td>
+<td>
+KLRhodes
+</td>
+<td>
+2019-02-19
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/KLRhodes/CM_ATAC_Workflow/blob/c9278dfd3464c37e814c6616cd9050f24f0d31e9/docs/figure/MarkingDuplicateFragments.Rmd/unnamed-chunk-6-5.png" target="_blank">c9278df</a>
 </td>
 <td>
@@ -1143,6 +1202,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/KLRhodes/CM_ATAC_Workflow/blob/79dc47520954e197d2572ef7ae701b1f23d53c29/docs/figure/MarkingDuplicateFragments.Rmd/unnamed-chunk-6-6.png" target="_blank">79dc475</a>
+</td>
+<td>
+KLRhodes
+</td>
+<td>
+2019-02-19
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/KLRhodes/CM_ATAC_Workflow/blob/c9278dfd3464c37e814c6616cd9050f24f0d31e9/docs/figure/MarkingDuplicateFragments.Rmd/unnamed-chunk-6-6.png" target="_blank">c9278df</a>
@@ -1201,8 +1271,6 @@ loaded via a namespace (and not attached):
 [25] fs_1.2.6         glue_1.3.0       evaluate_0.12    rmarkdown_1.11  
 [29] labeling_0.3     stringi_1.2.4    pillar_1.3.1     compiler_3.5.2  
 [33] scales_1.0.0     backports_1.1.3  pkgconfig_2.0.2 </code></pre>
-</div>
-</div>
 </div>
 </div>
 
